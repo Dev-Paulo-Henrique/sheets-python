@@ -12,7 +12,7 @@ from googleapiclient.errors import HttpError
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
-SAMPLE_SPREADSHEET_ID = '1aBy0Oe8f0pfMYh29f_k8SoNJWNulECsQ490OixuDdd0'
+SAMPLE_SPREADSHEET_ID = 'ID'
 SAMPLE_RANGE_NAME = 'Página1'
 
 def main():
@@ -43,9 +43,7 @@ def main():
         
         data = requests.get('https://s7ozoqcftf.execute-api.ap-south-1.amazonaws.com/dev/patients').json()
         for value in data.items():
-            print('')
-        
-        # Criar tabela
+            print('Criando tabela...')
         
         worksheet.write('A1', 'ID') 
         worksheet.write('A2', '%s' % (value[1][0]['patientId'])) 
@@ -69,13 +67,6 @@ def main():
         worksheet.write('D4', '%s' % (value[1][2]['room-status']))
         worksheet.write('E4', '%s' % (value[1][2]['rolling']))
         workbook.close()
-
-        if not values:
-            print('No data found.')
-            return
-
-        for row in values:
-            print('%s, %s' % (row[0], row[1]))
 
     except HttpError as err:
         print(err)
